@@ -18,7 +18,7 @@ dependencies = {
 }
 external_dependencies = {
    POSTGRES = {
-      header = "pg_config.h"
+      header = "pg_config.h",
 	  library = "postgres"
    }
 }
