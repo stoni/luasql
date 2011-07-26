@@ -374,9 +374,10 @@ static int conn_escape (lua_State *L) {
 	conn_data *conn = getconnection (L);
 	size_t len;
 	const char *from = luaL_checklstring (L, 2, &len);
-	char to[len*sizeof(char)*2+1];
+	char* to = (char*)malloc(len*sizeof(char)*2+1);
 	int error;
 	len = PQescapeStringConn (conn->pg_conn, to, from, len, &error);
+	free(to);
 	if (error == 0) { /* success ! */
 		lua_pushlstring (L, to, len);
 		return 1;
