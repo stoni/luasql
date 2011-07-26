@@ -43,7 +43,7 @@ build = {
 		modules = {
          luasql_postgres = {
            sources = {"src/ls_postgres.c"},
-           libraries = {"libpq", "postgres", "Ws2_32"},
+           libraries = {"libpq", "postgres", "libecpg", "Ws2_32"},
 	       incdirs = {"$(POSTGRES_INCDIR)"},
            libdirs = {"$(POSTGRES_LIBDIR)"}
         }
