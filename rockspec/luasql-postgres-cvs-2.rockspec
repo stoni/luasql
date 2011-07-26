@@ -19,19 +19,36 @@ dependencies = {
 external_dependencies = {
    POSTGRES = {
       header = "pg_config.h"
+	  library = "postgres"
    }
 }
 build = {
-   type = "make",
-   variables = {
-      T="postgres",
-      LIB_OPTION = "$(LIBFLAG) -L$(POSTGRES_LIBDIR) -lpq",
-      CFLAGS = "$(CFLAGS) -I$(LUA_INCDIR) -I$(POSTGRES_INCDIR) -I$(POSTGRES_INCDIR)/postgresql"
-   },
-   build_variables = {
-      DRIVER_LIBS="",
-   },
-   install_variables = {
-      LUA_LIBDIR = "$(LIBDIR)",
+   platforms = {
+     unix = {
+	   type = "make",
+       variables = {
+         T="postgres",
+         LIB_OPTION = "$(LIBFLAG) -L$(POSTGRES_LIBDIR) -lpq",
+         CFLAGS = "$(CFLAGS) -I$(LUA_INCDIR) -I$(POSTGRES_INCDIR) -I$(POSTGRES_INCDIR)/postgresql"
+       },
+       build_variables = {
+        DRIVER_LIBS="",
+       },
+       install_variables = {
+         LUA_LIBDIR = "$(LIBDIR)",
+       }   
+	 },
+	 win32 = {
+	    type = "builtin",
+		modules = {
+         postgres = {
+           sources = {"src/ls_postgres.c"},
+           libraries = {"postgres", "Ws2_32"},
+	       incdirs = {"$(POSTGRES_INCDIR)"},
+           libdirs = {"$(POSTGRES_LIBDIR)"}
+        }
+      }
+	 }
    }
+   
 }
