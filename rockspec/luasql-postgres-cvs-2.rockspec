@@ -17,9 +17,19 @@ dependencies = {
    "lua >= 5.1"
 }
 external_dependencies = {
-   POSTGRES = {
-      header = "pg_config.h",
-	  library = "libpq"
+   platforms = {
+     unix = {
+        POSTGRES = {
+          header = "pg_config.h",
+	  library = "pq"
+        }
+     },
+     win32 = {
+        POSTGRES = {
+          header = "pg_config.h",
+          library = "libpq"
+        }
+     }
    }
 }
 build = {
